@@ -12,14 +12,30 @@
     <div id="data"></div>
 </body>
 <script>
-       async function searchMovie(){
+        async function searchMovie(){
 
-let city = document.getElementById("city").value;
-let res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=9cf988d25c57cc38ba4d100ee45f5989`
-);
-let data = await res.json();
-console.log(data);
-showWeather(data);
-}
+        let movieName = document.getElementById("movie").value;
+        let res = await fetch(`http://www.omdbapi.com/?apikey=d806bd70&s=${moviesName}`
+        );
+        let data = await res.json();
+        console.log(data);
+        //showMovie(data);
+        }
+
+//    let container = document.getElementById("data")
+
+//         function showMovie(m){
+//             m.forEach(function(product){
+//                 let item = document.createElement("div");
+
+//                 let img = document.createElement("img");
+//                 img.src = product.image
+//                 let name = document.createElement("h4");
+//                 name.innerText = product.title
+//                 let price =document.createElement("h3");
+//                 price.innerText = "Rs. " + product.price
+//                 item.append(img, name, price);
+//                 container.append(item);
+//         }
 </script>
 </html>
