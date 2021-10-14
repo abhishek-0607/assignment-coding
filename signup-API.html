@@ -30,18 +30,18 @@
             <input id="username" type="text" placeholder="username" />
             <input id="mobile" type="number" placeholder="mobile" />
             <input id="description" type="text" placeholder="description" />
-            <input id="" type="submit" />
+            <input type="submit" />
           </form>
   
     </div>
     <div id="login">
         <h2>Log-In</h2>
-        <form onsubmit="Login(event)" id="login-form"></form>
+        <form onsubmit="Login(event)" id="login-form">
         <input id="username" type="text" placeholder="username" />
         <input id="password" type="password" placeholder="password" />
-        <input id="" type="submit" />
+        <input type="submit" />
 
-
+    </form>
 
     </div>
     
@@ -108,6 +108,7 @@
         })
         .then((res)=>{
             console.log("res:",res);
+            fetchmyData(user_data.username, res.token);
         })
         .catch((err)=>{
             console.log("err:",err);
@@ -130,7 +131,7 @@
         })
         .catch((err)=>{
             console.log("err:",err);
-        })
+        });
 
     }
 
