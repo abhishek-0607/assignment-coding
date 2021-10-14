@@ -55,6 +55,29 @@
         .menu-list-item{
             margin-right: 20px
         }
+        .box{
+         width:100%
+
+        }
+        .featured-content{
+                height: 500px;
+                background-image: url('https://i.redd.it/qioiyp5wo1341.jpg') ;
+                background-size: cover;
+        }
+        .featured-description{
+                height:350px;
+                font-weight: bold;
+                font-size:medium;
+                color: lightgrey;
+                padding: 50px;      
+
+        }
+        .featured-button{
+            background-color: black;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 15px;
+        }
         #container{
             display:grid;
             grid-template-columns: auto auto auto auto;
@@ -78,6 +101,10 @@
         p{
             padding:5px 20px;
         }
+        .title{
+            font-weight:bold
+        }
+
 
 
     </style>
@@ -102,6 +129,13 @@
     
         </div>
     </div>
+    <div class="box">
+        <div class="featured-content">
+            <p class="featured-description">The 29th movie of the famous british agent<br> named James Bond
+
+            </p>
+            <button class="featured-button">WATCH-NOW</button>
+        </div>
 
 
     <div id="container"></div>
@@ -141,9 +175,10 @@
                         let img = document.createElement("img");
                         img.src = film.Poster
                         let name = document.createElement("p");
+                        name.className= "title"
                         name.innerText = film.Title
                         let year =document.createElement("p");
-                        year.innerText = "Year" + film.Year;
+                        year.innerText = "Year-" + film.Year;
                         let Imdb_Rating = document.createElement("p");
                         Imdb_Rating.innerText=film.imdbID
 
