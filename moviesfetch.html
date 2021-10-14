@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>movies</title>
+</head>
+<body>
+    <input id="movie" type="text" />
+    <button onclick="searchMovie()">Search</button>
+    <div id="data"></div>
+</body>
+<script>
+       async function searchMovie(){
+
+let city = document.getElementById("city").value;
+let res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=9cf988d25c57cc38ba4d100ee45f5989`
+);
+let data = await res.json();
+console.log(data);
+showWeather(data);
+}
+</script>
+</html>
