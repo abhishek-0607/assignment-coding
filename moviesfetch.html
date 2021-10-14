@@ -5,37 +5,62 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>movies</title>
+    <style>
+      #container{
+        display:grid;
+        grid-template-columns: repeat(4, 25%);
+        margin: 5%;
+        grid-gap:20px;
+
+          
+      }
+      div>div{
+            width:150px;
+            text-align:left;
+            margin-bottom: 20px;
+        }
+        
+        img{
+            width: 100%;
+        }
+
+
+    </style>
 </head>
 <body>
     <input id="movie" type="text" />
     <button onclick="searchMovie()">Search</button>
-    <div id="data"></div>
+    <div id="container"></div>
 </body>
-<script>
-        async function searchMovie(){
+    <script>
+            async function searchMovie(){
 
-        let movieName = document.getElementById("movie").value;
-        let res = await fetch(`http://www.omdbapi.com/?apikey=d806bd70&s=${moviesName}`
-        );
-        let data = await res.json();
-        console.log(data);
-        //showMovie(data);
-        }
+                let movieName = document.getElementById("movie").value;
+                let res = await fetch(`http://www.omdbapi.com/?apikey=d806bd70&s=${movieName}`);
+                let data = await res.json();
+                console.log(data.Search);
+                showMovie(data.Search);
+            }
 
-//    let container = document.getElementById("data")
+            let container = document.getElementById("container")
 
-//         function showMovie(m){
-//             m.forEach(function(product){
-//                 let item = document.createElement("div");
+            function showMovie(d){
+                d.forEach(function(film){
+                    let item = document.createElement("div");
 
-//                 let img = document.createElement("img");
-//                 img.src = product.image
-//                 let name = document.createElement("h4");
-//                 name.innerText = product.title
-//                 let price =document.createElement("h3");
-//                 price.innerText = "Rs. " + product.price
-//                 item.append(img, name, price);
-//                 container.append(item);
-//         }
-</script>
+                    let img = document.createElement("img");
+                    img.src = film.Poster
+                    let name = document.createElement("p");
+                    name.innerText = film.Title
+                    let year =document.createElement("p");
+                    year.innerText = film.Year;
+                    let Imdb_Rating = document.createElement("p");
+                    Imdb_Rating.innerText=film.imdbID
+
+                    item.append(img, name, year,Imdb_Rating);
+                    container.append(item);
+                    
+                })
+            }
+    </script>
 </html>
