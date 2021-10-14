@@ -8,20 +8,23 @@
     <style>
       #container{
         display:grid;
-        grid-template-columns: repeat(4, 25%);
-        margin: 5%;
-        grid-gap:20px;
+        grid-template-columns: auto auto auto auto;
+        margin:auto;
 
           
       }
       div>div{
-            width:150px;
+            border:1px solid black;
+            width:200px;
             text-align:left;
-            margin-bottom: 20px;
+            margin: 10px 0;
         }
         
         img{
             width: 100%;
+        }
+        p{
+            padding-left: 10px;
         }
 
 
@@ -45,7 +48,9 @@
             let container = document.getElementById("container")
 
             function showMovie(d){
+                container.innerHTML = null;
                 d.forEach(function(film){
+                    
                     let item = document.createElement("div");
 
                     let img = document.createElement("img");
@@ -53,7 +58,7 @@
                     let name = document.createElement("p");
                     name.innerText = film.Title
                     let year =document.createElement("p");
-                    year.innerText = film.Year;
+                    year.innerText = "Year" + film.Year;
                     let Imdb_Rating = document.createElement("p");
                     Imdb_Rating.innerText=film.imdbID
 
