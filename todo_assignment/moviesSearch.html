@@ -151,15 +151,12 @@
             console.log(data);
             console.log(res);
             showMovie(data);
-
         })
-
         });
     }
 
     async function main(){
         let name = document.getElementById("movie").value;
-
         if(name.length < 3){
             return false;
         }
@@ -170,7 +167,6 @@
 
 
     function debounce(func, delay){
-
         if(timerId){
             clearTimeout(timerId)
         }
@@ -180,7 +176,6 @@
     } 
     function showMovie(d){
         container.innerHTML = null;
-
         if(d === undefined){
             let item = document.createElement("div");
             item.className = "movies";
