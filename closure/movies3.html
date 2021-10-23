@@ -6,15 +6,135 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<style>
+                *{
+                margin:0;
+            }
+        body{
+            font-family: 'Montserrat', sans-serif;
+        }
+        .navbar{
+            width: 100%;
+            height:50px;
+            background-color: black;
+        }
+        .navbar-container{
+            
+            display:flex;
+            align-items: center;
+
+            padding: 0 50px;
+            height: 100%;
+            color:white;
+        }
+        .logo-container{
+            flex:2;
+            
+            text-align: center;
+
+        }
+        .searchbar{
+            flex:2;
+            
+        }
+        .menu-container{
+           flex:3;
+        }
+
+        .menu-list{
+            display:flex;
+            list-style: none;
+        }
+        .menu-list-item.active{
+            font-weight:bold
+        }
+        .menu-list-item{
+            margin-right: 20px
+        }
+        .box{
+         width:100%
+
+        }
+        #container{
+        display:grid;
+        grid-template-columns: auto auto auto auto;
+        margin:auto;
+        padding: 50px;
+
+            
+        }
+        .movies{
+            width:250px;
+            height:450px;
+            text-align:left;
+            margin-bottom: 70px;
+            
+        }
+
+        
+        img{
+            width : 100%;
+            height: 300px;
+        }
+        p{
+            padding:5px 20px;
+        }
+        .title{
+            font-weight:bold
+        }
+</style>
 <body>
+    <div class="navbar">
+        <div class="navbar-container">
+            <div class="logo-container"><h1 class="logo">MoviesAdda</h1></div>
+            <div class="searchbar">
+                <input id="movie" type="text" />
+                <button onclick="searchMovie()">Search</button>
+            </div>
+            <div class="menu-container">
+                <ul class="menu-list">
+                    <li class="menu-list-item active">Home</li>
+                    <li class="menu-list-item">Movies</li>
+                    <li class="menu-list-item">Series</li>
+                    <li class="menu-list-item">Popular</li>
+                    <li class="menu-list-item">Trends</li>
+                </ul>
+            </div>
     
+        </div>
+    </div>
+    <div id="container"></div>
 </body>
 </html>
 <script>
     async function list(){
-        let res = await fetch(`https://api.themoviedb.org/3/trending/all/day?api_key=d806bd70&t`);
+        let res = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=99b40b43b8857f9096bcc0b98595a225&language=en-US&page=1`);
         let data = await res.json();
-        console.log(data);
+        console.log(data.results);
+        showMovie(data.results)
     }
     list();
+    let container = document.getElementById("container")
+
+function showMovie(d){
+    d.forEach(function(film){                   
+                        let item = document.createElement("div");
+                        item.className = "movies";
+
+                        let img = document.createElement("img");
+                        img.src = film.poster_path
+                        let name = document.createElement("p");
+                        name.className= "title"
+                        name.innerText = film.title
+                        let year =document.createElement("p");
+                        year.innerText = "Release Date-" + film.release_date;
+                        let vote = document.createElement("p");
+                        vote.innerText="Vote- "+film.vote_average+"/10";
+
+                        item.append(img,name,year,vote,);
+                        container.append(item);
+                        
+                    })
+            
+}
 </script>
