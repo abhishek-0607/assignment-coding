@@ -33,7 +33,7 @@
             text-align: center;
 
         }
-        .searchbar{
+        #searchbar{
             flex:2;
             
         }
@@ -87,7 +87,7 @@
     <div class="navbar">
         <div class="navbar-container">
             <div class="logo-container"><h1 class="logo">MoviesAdda</h1></div>
-            <div class="searchbar">
+            <div id="searchbar">
                 <input id="movie" type="text" />
                 <button onclick="searchMovie()">Search</button>
             </div>
@@ -108,7 +108,11 @@
 </html>
 <script>
     async function list(){
-        let res = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=99b40b43b8857f9096bcc0b98595a225&language=en-US&page=1`);
+        // https://api.themoviedb.org/3/movie/550?api_key=fb8ba24f8e6b1c3f659d327c51575968
+       // api_url = /discover/movie?sort_by=popularity.desc 
+
+
+        let res = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=fb8ba24f8e6b1c3f659d327c51575968&language=en-US&page=1`);
         let data = await res.json();
         console.log(data.results);
         showMovie(data.results)
@@ -116,25 +120,54 @@
     list();
     let container = document.getElementById("container")
 
-function showMovie(d){
-    d.forEach(function(film){                   
-                        let item = document.createElement("div");
-                        item.className = "movies";
+    function showMovie(d){
+        container.innerHTML = null;
+        d.forEach(function(film){                   
+                let item = document.createElement("div");
+                item.className = "movies";
 
-                        let img = document.createElement("img");
-                        img.src = film.poster_path
-                        let name = document.createElement("p");
-                        name.className= "title"
-                        name.innerText = film.title
-                        let year =document.createElement("p");
-                        year.innerText = "Release Date-" + film.release_date;
-                        let vote = document.createElement("p");
-                        vote.innerText="Vote- "+film.vote_average+"/10";
+                let img = document.createElement("img");
+                const img_url = "https://image.tmdb.org/t/p/w500"
+                img.src = img_url + film.poster_path
+                let name = document.createElement("p");
+                name.className= "title"
+                name.innerText = film.title
+                let year =document.createElement("p");
+                year.innerText = "Release Date-" + film.release_date;
+                let vote = document.createElement("p");
+                vote.innerText="Vote- "+film.vote_average+"/10";
 
-                        item.append(img,name,year,vote,);
-                        container.append(item);
-                        
-                    })
-            
-}
+                let details = document.createElement("div");
+                details.classname = "info";
+
+                let overview = document.createElement("div");
+                let overv = document.createElement("h3");
+                overv.innerText = "Overview"
+                let desc = document.createElement("p");
+                desc.innerText = film.overview;
+
+                
+
+                details.append(name,year,vote,)
+                item.append(img,details);
+                container.append(item);
+                
+            })
+    
+    }
+
+    async function searchMovie(){
+        let movieName = document.getElementById("movie").value;
+        let res = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=fb8ba24f8e6b1c3f659d327c51575968&query=${movieName}`);
+        let data = await res.json();
+        console.log(data.results);
+        showMovie(data.results)
+
+         
+        
+    }
+
+
+
+
 </script>
