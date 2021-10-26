@@ -7,9 +7,9 @@
     <title>Document</title>
 </head>
 <style>
-                *{
+        *{
                 margin:0;
-            }
+        }
         body{
             font-family: 'Montserrat', sans-serif;
         }
@@ -26,7 +26,7 @@
             color:white;
         }
         .logo-container{
-            flex:2;     
+            flex:2;            
             text-align: center;
         }
         #searchbar{
@@ -35,7 +35,6 @@
         .menu-container{
            flex:3;
         }
-
         .menu-list{
             display:flex;
             list-style: none;
@@ -55,12 +54,16 @@
         margin:auto;
         padding: 50px;          
         }
+        #cont{
+        margin:auto;
+        padding: 50px;          
+        }
         .movies{
             width:250px;
             height:450px;
             text-align:left;
-            margin-bottom: 70px;       
-        }    
+            margin-bottom: 70px;        
+        }        
         img{
             width : 100%;
             height: 300px;
@@ -70,6 +73,17 @@
         }
         .title{
             font-weight:bold
+        }
+        .mov{
+            display:grid;
+            grid-template-columns: auto auto;
+            height:450px;
+            
+
+        }   
+        .detail{
+            text-align:left;
+            margin-left: 20px;
         }
 </style>
 <body>
@@ -88,28 +102,30 @@
                     <li class="menu-list-item">Popular</li>
                     <li class="menu-list-item">Trends</li>
                 </ul>
-            </div> 
+            </div>
+    
         </div>
     </div>
     <div id="container"></div>
+    <div id = "cont"></div>
 </body>
 </html>
 <script>
     async function list(){
-        // https://api.themoviedb.org/3/movie/550?api_key=fb8ba24f8e6b1c3f659d327c51575968
-       // api_url = /discover/movie?sort_by=popularity.desc 
-
-
         let res = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=fb8ba24f8e6b1c3f659d327c51575968&language=en-US&page=1`);
         let data = await res.json();
-        console.log(data);
+        console.log(data.results);
         showMovie(data.results)
     }
     list();
-    let container = document.getElementById("container")
+
+    let container = document.getElementById("container");
+    let cont = document.getElementById("cont");
+
 
     function showMovie(d){
         container.innerHTML = null;
+        cont.innerHTML = null;
         d.forEach(function(film){                   
                 let item = document.createElement("div");
                 item.className = "movies";
@@ -118,8 +134,15 @@
                 const img_url = "https://image.tmdb.org/t/p/w500"
                 img.src = img_url + film.poster_path
                 let name = document.createElement("p");
-                name.className= "title"
+                name.className ="title"
                 name.innerText = film.title
+                let movies_id = document.createElement("p");
+                movies_id.innerText = film.id;
+                item.addEventListener("click",function(){
+                    let id = movies_id.innerText;
+                    showDetails(id);
+                    
+                })
                 let year =document.createElement("p");
                 year.innerText = "Release Date-" + film.release_date;
                 let vote = document.createElement("p");
@@ -143,4 +166,65 @@
             })
     
     }
-<script/>
+
+    async function searchMovie(){
+        let movieName = document.getElementById("movie").value;
+        let res = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=fb8ba24f8e6b1c3f659d327c51575968&query=${movieName}`);
+        let data = await res.json();
+        console.log(data.results);
+        showMovie(data.results)
+        
+
+         
+        
+    }
+
+    async function showDetails(name){    
+        let res = await fetch(`https://api.themoviedb.org/3/movie/${name}?api_key=fb8ba24f8e6b1c3f659d327c51575968&language=en-US`);
+        let data = await res.json();
+        console.log(data);
+        showData(data)
+    }
+    function showData(d){
+        cont.innerHTML= null;
+
+        container.innerHTML = null;
+        let item = document.createElement("div");
+                item.className = "mov";
+                let detail = document.createElement("div");
+                detail.className = "detail";
+
+
+                let img = document.createElement("img");
+                const img_url = "https://image.tmdb.org/t/p/w500"
+                img.src = img_url + d.poster_path
+                let name = document.createElement("p");
+                name.className ="title"
+                name.innerText = d.title
+                let year =document.createElement("p");
+                year.innerText = "Release Date-" + d.release_date;
+                let vote = document.createElement("p");
+                vote.className ="title"
+                vote.innerText="Vote- "+d.vote_average+"/10";
+
+                let details = document.createElement("div");
+                details.classname = "info";
+
+                let overview = document.createElement("div");
+                let overv = document.createElement("p");
+                overv.className ="title"
+                overv.innerText = "Overview"
+                let desc = document.createElement("p");
+                desc.innerText = d.overview;
+
+                details.append(name, year,overv,desc,vote);
+
+                item.append(img,details);
+                cont.append(item);
+
+    }
+
+
+
+
+</script>
