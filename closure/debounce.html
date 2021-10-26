@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>movies search</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+            *{
+                margin:0;
+            }
+        body{
+            font-family: 'Montserrat', sans-serif;
+        }
+        .navbar{
+            width: 100%;
+            height:50px;
+            background-color: black;
+        }
+        .navbar-container{           
+            display:flex;
+            align-items: center;
+            padding: 0 50px;
+            height: 100%;
+            color:white;
+        }
+        .logo-container{
+            flex:2;           
+            text-align: center;
+        }
+        .searchbar{
+            flex:2;           
+        }
+        .menu-container{
+           flex:3;
+        }
+        .menu-list{
+            display:flex;
+            list-style: none;
+        }
+        .menu-list-item.active{
+            font-weight:bold
+        }
+        .menu-list-item{
+            margin-right: 20px
+        }
+        #container{
+            display:flex;
+            flex-direction: column;
+            margin:auto;
+            padding: 50px;         
+        }
+        .movies{
+            display:grid;
+            grid-template-columns: auto auto;
+            height:450px;
+            
+
+        }   
+        .details{
+            text-align:left;
+            margin-left: 20px;
+        }
+       .title{
+           font-weight:bold;
+       } 
+        p{
+            padding:5px 0;
+        }
+        #moviesSearch{
+            max-height: 100px;
+            max-width: 206px;
+            overflow:scroll;
+            margin-left:382px
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-container">
+            <div class="logo-container"><h1 class="logo">MoviesAdda</h1></div>
+            <div class="searchbar">
+                <input oninput="debounce(main,1000)" id="movie" type="text" placeholder="enter movie title"/>
+                <button onclick="searchMovie()">Search</button>
+            </div>
+            <div class="menu-container">
+                <ul class="menu-list">
+                    <li class="menu-list-item active">Home</li>
+                    <li class="menu-list-item">Movies</li>
+                    <li class="menu-list-item">Series</li>
+                    <li class="menu-list-item">Popular</li>
+                    <li class="menu-list-item">Trends</li>
+                </ul>
+            </div>
+    
+        </div>
+    </div>
+    <div id="moviesSearch"></div> 
+
+
+
+    <div id="container"></div>
+</body>
+    <script>
+    var timerId;  
+    let moviesDiv = document.getElementById("moviesSearch");
+    let container = document.getElementById("container")
+
+    async function searchMovies(moviesName){
+        try{
+            let res = await fetch(`http://www.omdbapi.com/?apikey=d806bd70&s=${moviesName}`)
+            let data = await res.json();
+            return data;
+        }
+        catch(e){
+            console.log(e);
+        }
+    }
+    async function searchMovie(){
+        moviesSearch.innerHTML = null;
+        let movieName = document.getElementById("movie").value;
+        let res = await fetch(`http://www.omdbapi.com/?apikey=d806bd70&t=${movieName}`);
+        let data = await res.json();
+        console.log(data);
+        console.log(res);
+        showMovie(data);       
+    }
+
+    function appendMovies(movies){
+        if(movies === undefined){
+            return false
+        }
+        moviesDiv.innerHTML = null;
+        movies.forEach(function(movie){
+            let div = document.createElement("div")
+        let p = document.createElement("p");
+        p.innerText= movie.Title;
+        div.append(p)        
+        moviesDiv.append(div);
+        div.addEventListener("click",async function(){
+        moviesSearch.innerHTML = null;
+
+            let movieName = div.innerText;
+            let res = await fetch(`http://www.omdbapi.com/?apikey=d806bd70&t=${movieName}`);
+            let data = await res.json();
+            console.log(data);
+            console.log(res);
+            showMovie(data);
+        })
+        });
+    }
+
+    async function main(){
+        let name = document.getElementById("movie").value;
+        if(name.length < 3){
+            return false;
+        }
+        let res = await searchMovies(name);
+        appendMovies(res.Search);
+        console.log(res);
+    }
+
+
+    function debounce(func, delay){
+        if(timerId){
+            clearTimeout(timerId)
+        }
+        timerId = setTimeout(function(){
+            func();
+        },delay);
+    } 
+    function showMovie(d){
+        container.innerHTML = null;
+        if(d === undefined){
+            let item = document.createElement("div");
+            item.className = "movies";
+            let img = document.createElement("img");
+            img.src = "https://c.tenor.com/NpZyGNG3SLEAAAAM/this-content-is-not-available.gif"
+            item.append(img);
+            container.append(item);
+        }
+        else{  
+                let item = document.createElement("div");
+                item.className = "movies";
+                let details = document.createElement("div");
+                details.className = "details";
+
+
+                let img = document.createElement("img");
+                img.src = d.Poster
+                let name = document.createElement("p");
+                name.className = "title";
+                name.innerText = "Title: "+d.Title
+                let year =document.createElement("p");
+                year.innerText = "Year: " + d.Year;
+                let genre =document.createElement("p");
+                genre.innerText = "Genre: " + d.Genre
+                let Imdb_Rating = document.createElement("p");
+                Imdb_Rating.innerText= "imdbRating: "+d.imdbRating;
+                let plot = document.createElement("p");
+                plot.innerText = "Plot: " +d.Plot;
+                let director = document.createElement("p");
+                director.innerText = "Director: "+ d.Director;
+                let actors = document.createElement("p");
+                actors.innerText = "Actors: " +d.Actors;
+
+                details.append(name, year,genre,Imdb_Rating,plot,director,actors);
+
+                item.append(img,details);
+                container.append(item);
+                
+            
+        }
+    }
+
+    </script>
+</html>
