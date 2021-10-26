@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet">
+    <title>Youtube II</title>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+    
+    <div class="header">
+        <div class="header-left">
+            <i class="material-icons">menu</i>
+            <img src="https://www.gstatic.com/youtube/img/branding/youtubelogo/svg/youtubelogo.svg" alt="">
+        </div>
+        <div class="header-search">
+            <form action="">
+                <input type="text" id="query" placeholder="Search" />
+                <button onclick="searchVideos()"><i class="material-icons">search</i></button>
+            </form>
+        </div>
+        <div class="header-icons">
+            <i class="material-icons">videocam</i>
+            <i class="material-icons">apps</i>
+            <i class="material-icons">notifications</i>
+            <i class="material-icons">account_circle</i>
+        </div>
+    </div>
+
+<div class="mainbody">
+    <div class="sidebar">
+        <div class="sidebar-categories">
+            <div class="sidebar-category">
+                <i class="material-icons">home</i>
+                <span>Home</span>
+            </div>
+            <div class="sidebar-category">
+                <i class="material-icons">local_fire_department</i>
+                <span>Trending</span>
+            </div>
+            <div class="sidebar-category">
+                <i class="material-icons">subscriptions</i>
+                <span>Subscriptions</span>
+            </div>
+        </div>
+        <hr/>
+
+        
+        <div class="sidebar-categories">
+            <div class="sidebar-category">
+                <i class="material-icons">library_add_check</i>
+                <span>Library</span>
+            </div>
+            <div class="sidebar-category">
+                <i class="material-icons">history</i>
+                <span>History</span>
+            </div>
+            <div class="sidebar-category">
+                <i class="material-icons">play_arrow</i>
+                <span>Your Videos</span>
+            </div>
+            <div class="sidebar-category">
+                <i class="material-icons">watch_later</i>
+                <span>Watch later</span>
+            </div>
+            <div class="sidebar-category">
+                <i class="material-icons">thumb_up</i>
+                <span>Liked Videos</span>
+            </div>
+        </div>
+        <hr/>
+    </div>
+    <!---->
+
+    <div id="videos"></div>
+
+</div>
+
+
+
+</body>
+</html>
+<script>
+    let videos = document.getElementById("videos");
+
+async function searchVideos(){
+    let query = document.getElementById("query").value;
+
+    let res = await fetch(`https://youtube.googleapis.com/youtube/v3/search?q=${query}&type=video&key=AIzaSyCFRQeEOTl8My-fW3XmzrxmSqDkoicoqKY`)
+    let data = await res.json();
+    console.log(data);
+
+    appendVideos(data.items);  
+
+}
+
+function appendVideos(video){
+    videos.innerHTML = null;
+    video.forEach(( { id: {videoId} } )=>{
+
+        let div = document.createElement("div");
+        div.innerHTML = `<iframe width="360" height="240" src="https://www.youtube.com/embed/${videoId}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+
+        videos.append(div);
+    })
+}
+</script>
