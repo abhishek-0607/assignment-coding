@@ -102,7 +102,7 @@ hr{
 
 #videos{
     width:calc(100%-250px);
-    margin-left:250px;
+    margin-left:230px;
     display:grid;
     grid-template-columns: auto auto auto auto;
     grid-gap: 15px 5px;
@@ -113,7 +113,7 @@ hr{
     width:300px;
     min-height: 250px;
     height:auto;
-    margin:30px 30px 15px;
+    margin:30px 15px;
 
 }
 .thumbnail{
