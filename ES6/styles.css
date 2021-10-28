@@ -10,7 +10,7 @@ body{
 }
 
 .material-icons{
-    color:rgb(96,96,96);
+    color:rgb(61, 61, 61);
 }
 .header{
     display:flex;
@@ -31,15 +31,15 @@ body{
     padding:0 7px;
     cursor:pointer;
 }
-.header-search form{
+.header-search{
     border: 1px solid #ddd;
-    height:35px;
+    height:45px;
     margin:0;
     padding:0;
     display:flex;
 }
 .header-search input{
-    width:400px;
+    width:500px;
     padding:10px;
     margin:0;
     border-radius:0;
@@ -47,6 +47,8 @@ body{
 
 }
 .header-search button{
+    background-color: rgb(153, 153, 153);
+    width:45px;
     padding:0;
     margin:0;
     height:100%;
@@ -55,27 +57,23 @@ body{
 }
 
 
-/* mainbody */
 
-.mainbody{
-    height:calc(100vh-70px);
-    display:flex;
-    overflow:hidden;
-}
 
 
 /* sidebar */
 .sidebar{
-    height: 100%;
-    width:230px;
+    position:fixed;
+    width:200px;
+    min-width:200px;
     background-color:white;
     overflow-y:scroll;
+    margin-right:5px;
 }
 .sidebar-categories{
     width:100%;
     display:flex;
     flex-direction:column;
-    margin:15px 0px;
+    margin:15px 5px;
 }
 .sidebar-category{
     display:flex;
@@ -103,13 +101,48 @@ hr{
 
 
 #videos{
-    display:flex;
-    flex-wrap:wrap;
+    width:calc(100%-250px);
+    margin-left:250px;
+    display:grid;
+    grid-template-columns: auto auto auto auto;
+    grid-gap: 15px 5px;
+    background-color: rgb(216, 216, 216);
     
 }
-#videos > div{
-    margin: 10px;
+.video{
+    width:300px;
+    min-height: 250px;
+    height:auto;
+    margin:30px 30px 15px;
+
 }
+.thumbnail{
+    width:100%;
+    height:200px
+
+}
+.content{
+    width:100%;
+    height:100px;
+    padding:10px;
+    display:flex;
+    justify-content:space-between
+}
+.icons{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    object-fit: cover;
+    margin-right:10px;
+}
+.name{
+    font-size: 14px;
+    margin:3px 0;
+    color:#575757;
+}
+
+
+
 
 
 
