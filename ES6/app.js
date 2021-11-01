@@ -1,4 +1,4 @@
-let videos_http = "https://www.googleapis.com/youtube/v3/videos";
+let videos_http = "https://www.googleapis.com/youtube/v3/search?";
 let api_key = "AIzaSyBBpC47f71CBGfd7MPEDG16fVYBrZ8yVQ0"
 let channel_http = "https://www.googleapis.com/youtube/v3/channels?";
 
@@ -24,7 +24,7 @@ const getChannelIcon = (video)=>{
     }))
     .then(res=>res.json())
     .then(data=>{video.channelThumbnail = data.items[0].snippet.thumbnails.default.url;
-    console.log(video)
+    //console.log(video)
     makeVideoCard(video);
     })
 }
@@ -65,7 +65,7 @@ const makeVideoCard=(data)=>{
 // searchbar 
 
 async function searchVideos(){
-    videos.innerHTML = null;
+
     let query = document.getElementById("query").value;
 
     let res = await fetch(
@@ -73,7 +73,54 @@ async function searchVideos(){
 
         `)
     let data = await res.json();
-    console.log(data);
+    console.log(data.items);
+    data.items.forEach(item =>{
+        getVideo(item);
+    });   
+
+
+
+}
+const getVideo = (video)=>{
+    fetch(videos_http + new URLSearchParams({
+        key: api_key,
+        part:'snippet',
+        type: video
+    }))
+    .then(res=>res.json())
+    .then(data=>{video.channelThumbnail = data.items[0].snippet.thumbnails.default.url;
+    console.log(video)
+    //showVideos(video);
+    })
+}
+
+const showVideos=(data)=>{
+    let video = document.createElement("div");
+    video.className ="video";
+    video.addEventListener("click",()=>{
+        location.href=`https://youtube.com/watch?v=${data.id}`})
+
+    let image = document.createElement("img");
+    image.className ="thumbnail";
+    image.src = data.snippet.thumbnails.high.url;
+
+    let content = document.createElement("div");
+    content.className ="content";
+    let icon = document.createElement("img");
+    icon.className ="icons";
+    icon.src = data.channelThumbnail;
+    let info = document.createElement("div");
+    info.className ="info";
+    let name = document.createElement("h4");
+    name.className ="title";
+    name.innerText = data.snippet.title;
+    let para = document.createElement("p");
+    para.className ="name";
+    para.innerText = data.snippet.channelTitle;
+    info.append(name,para);
+    content.append(icon,info);
+    video.append(image,content);
+    videos.append(video)
 
 
 }
