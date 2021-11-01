@@ -172,11 +172,7 @@
         let res = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=fb8ba24f8e6b1c3f659d327c51575968&query=${movieName}`);
         let data = await res.json();
         console.log(data.results);
-        showMovie(data.results)
-        
-
-         
-        
+        showMovie(data.results)       
     }
 
     async function showDetails(name){    
@@ -190,37 +186,37 @@
 
         container.innerHTML = null;
         let item = document.createElement("div");
-                item.className = "mov";
-                let detail = document.createElement("div");
-                detail.className = "detail";
+        item.className = "mov";
+        let detail = document.createElement("div");
+        detail.className = "detail";
 
 
-                let img = document.createElement("img");
-                const img_url = "https://image.tmdb.org/t/p/w500"
-                img.src = img_url + d.poster_path
-                let name = document.createElement("p");
-                name.className ="title"
-                name.innerText = d.title
-                let year =document.createElement("p");
-                year.innerText = "Release Date-" + d.release_date;
-                let vote = document.createElement("p");
-                vote.className ="title"
-                vote.innerText="Vote- "+d.vote_average+"/10";
+        let img = document.createElement("img");
+        const img_url = "https://image.tmdb.org/t/p/w500"
+        img.src = img_url + d.poster_path
+        let name = document.createElement("p");
+        name.className ="title"
+        name.innerText = d.title
+        let year =document.createElement("p");
+        year.innerText = "Release Date-" + d.release_date;
+        let vote = document.createElement("p");
+        vote.className ="title"
+        vote.innerText="Vote- "+d.vote_average+"/10";
 
-                let details = document.createElement("div");
-                details.classname = "info";
+        let details = document.createElement("div");
+        details.classname = "info";
 
-                let overview = document.createElement("div");
-                let overv = document.createElement("p");
-                overv.className ="title"
-                overv.innerText = "Overview"
-                let desc = document.createElement("p");
-                desc.innerText = d.overview;
+        let overview = document.createElement("div");
+        let overv = document.createElement("p");
+        overv.className ="title"
+        overv.innerText = "Overview"
+        let desc = document.createElement("p");
+        desc.innerText = d.overview;
 
-                details.append(name, year,overv,desc,vote);
+        details.append(name, year,overv,desc,vote);
 
-                item.append(img,details);
-                cont.append(item);
+        item.append(img,details);
+        cont.append(item);
 
     }
 
