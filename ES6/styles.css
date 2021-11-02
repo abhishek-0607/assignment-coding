@@ -102,11 +102,11 @@ hr{
 
 #videos{
     width:calc(100%-250px);
-    margin-left:230px;
+    margin-left:220px;
     display:grid;
     grid-template-columns: auto auto auto auto;
     grid-gap: 15px 5px;
-    background-color: rgb(216, 216, 216);
+    background-color: rgb(231, 230, 236);
     
 }
 .video{
