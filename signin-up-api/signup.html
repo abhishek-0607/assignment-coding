@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sign up</title>
+    <style>
+        body{
+            margin:0;
+            padding:0;
+        }
+        #signup{
+        width:300px;
+        box-shadow: 0 0 3px 0 rgba(0,0,0,0.3);
+        background: #fff;
+        padding: 20px;
+        margin:8% auto 0;
+        text-align: center;
+        
+        }
+        .input-box{
+            width: 90%;
+            border-radius: 20px;
+            padding:10px;
+            margin:10px 0;      
+            border:1px solid #999;
+            outline: none;
+            cursor:pointer;
+        }
+        .login-btn{
+            text-decoration: none;
+            color:black;
+            cursor:pointer;
+        }
+    </style>
+    
+</head>
+<body>
+    <div id="signup">
+        <h1>Sign-Up</h1>
+        <form onsubmit="Signup(event)" id="signup-form"> 
+            <input id="name" class="input-box" type="text" placeholder="Name">
+            <input id="email" class="input-box" type="email" placeholder="Email">
+            <input id="password" class="input-box" type="password" placeholder="Password">
+            <input id="username" class="input-box" type="text" placeholder="Username">
+            <input id="mobile" class="input-box" type="number" placeholder="Mobile">
+            <input id="description" class="input-box" type="text" placeholder="Description">
+            <input class="signup-btn input-box" type="submit">
+          </form>
+          <hr>
+          <p class="or">or</p>
+          <a href="login.html" class="login-btn">Already have a Account?</a>
+  
+    </div>
+    
+</body>
+</html>
+<script>
+    function Signup(e){
+        e.preventDefault();
+        let form = document.getElementById("signup-form");
+        let user_data = {
+            name: form.name.value,
+            email: form.email.value,
+            password: form.password.value, 
+            username: form.username.value,
+            mobile: form.mobile.value, 
+            description: form.description.value, 
+        }
+        user_data = JSON.stringify(user_data)
+        fetch("https://masai-api-mocker.herokuapp.com/auth/register", {
+            method:'POST',
+            body: user_data,
+            headers:{
+                "content-Type":"application/json"
+            }
+        })
+        .then((res)=>{
+            return res.json();
+
+        })
+        .then((res)=>{
+            console.log("res:",res);
+
+        })
+        .catch((err)=>{
+            console.log("err:",err);
+
+        })
+
+
+    }
+
+
+
+
+</script>
