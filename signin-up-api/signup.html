@@ -10,19 +10,22 @@
             margin:0;
             padding:0;
         }
-        #signup{
-        width:300px;
+        .sign-up{
+        width:400px;
         box-shadow: 0 0 3px 0 rgba(0,0,0,0.3);
         background: #fff;
-        padding: 20px;
+        padding: 50px;
         margin:8% auto 0;
         text-align: center;
         
         }
+        #signup-form {
+            text-align: left;
+        }
         .input-box{
-            width: 90%;
-            border-radius: 20px;
-            padding:10px;
+            width: 100%;
+            border-radius: 5px;
+            padding:15px;
             margin:10px 0;      
             border:1px solid #999;
             outline: none;
@@ -37,11 +40,16 @@
     
 </head>
 <body>
-    <div id="signup">
+    <div id="signup" class="sign-up">
         <h1>Sign-Up</h1>
         <form onsubmit="Signup(event)" id="signup-form"> 
+            <p>FULL     NAME</p>
             <input id="name" class="input-box" type="text" placeholder="Name">
+            <p>EMAIL</p>
+
             <input id="email" class="input-box" type="email" placeholder="Email">
+            <p>PASSWORD</p>
+
             <input id="password" class="input-box" type="password" placeholder="Password">
             <input id="username" class="input-box" type="text" placeholder="Username">
             <input id="mobile" class="input-box" type="number" placeholder="Mobile">
