@@ -23,13 +23,16 @@
             text-align: left;
         }
         .input-box{
-            width: 100%;
+            width: 90%;
             border-radius: 5px;
             padding:15px;
             margin:10px 0;      
             border:1px solid #999;
             outline: none;
             cursor:pointer;
+        }
+        .signup-btn{
+            width: 98%;
         }
         .login-btn{
             text-decoration: none;
@@ -43,12 +46,8 @@
     <div id="signup" class="sign-up">
         <h1>Sign-Up</h1>
         <form onsubmit="Signup(event)" id="signup-form"> 
-            <p>FULL     NAME</p>
             <input id="name" class="input-box" type="text" placeholder="Name">
-
-            <p>EMAIL</p>
             <input id="email" class="input-box" type="email" placeholder="Email">
-            <p>PASSWORD</p>
 
             <input id="password" class="input-box" type="password" placeholder="Password">
             <input id="username" class="input-box" type="text" placeholder="Username">
