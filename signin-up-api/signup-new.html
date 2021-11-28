@@ -39,23 +39,30 @@
             color:black;
             cursor:pointer;
         }
+        .close {
+        cursor: pointer;
+        padding: 12px 16px;
+
+      }
     </style>
     
 </head>
 <body>
+    
     <div id="signup" class="sign-up">
+        <div><span class="close">X</span></div>
         <h1>Sign-Up</h1>
         <form onsubmit="Signup(event)" id="signup-form"> 
             <input id="name" class="input-box" type="text" placeholder="Name">
             <input id="email" class="input-box" type="email" placeholder="Email">
-
+            <input id="username" class="input-box" type="text" placeholder="Username">
             <input id="password" class="input-box" type="password" placeholder="Password">
 
-            <input class="signup-btn input-box" type="submit">
+            <input class="signup-btn input-box" type="submit" value="Join for Free">
           </form>
           <hr>
           <p class="or">or</p>
-          <a href="login.html" class="login-btn">Already have a Account?</a>
+          <a href="login-new.html" class="login-btn">Already have a Account?</a>
   
     </div>
     
@@ -67,15 +74,18 @@
         e.preventDefault();
         let form = document.getElementById("signup-form");
 
-        let user_data = {
+        let user = {
             name: form.name.value,
             email: form.email.value,
+            username:form.username.value,   
             password: form.password.value, 
-            username: "user"+count,
-            mobile: "9898989898", 
-            description: "desc", 
+   
+            mobile: Math.floor((Math.random() * 10000000000) + 1), 
+            description: "masai_school", 
+
         }
-        user_data = JSON.stringify(user_data)
+        console.log(user);
+        user_data = JSON.stringify(user);
         fetch("https://masai-api-mocker.herokuapp.com/auth/register", {
             method:'POST',
             body: user_data,
